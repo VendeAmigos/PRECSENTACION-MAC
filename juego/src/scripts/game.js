@@ -342,7 +342,7 @@ function setupEventListeners() {
       e.preventDefault();
       state.soundEnabled = !state.soundEnabled;
       Sounds.setSoundEnabled(state.soundEnabled);
-      soundToggle.textContent = state.soundEnabled ? 'AUDIO: ON' : 'AUDIO: OFF';
+      soundToggle.textContent = state.soundEnabled ? '🔊' : '🔇';
     });
   }
 }
