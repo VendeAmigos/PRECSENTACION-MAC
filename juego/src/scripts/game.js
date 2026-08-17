@@ -38,12 +38,12 @@ import {
 // ENEMY DEFINITIONS
 // ============================================
 const ENEMIES = [
-  { name: 'Troyano', sprite: '/assets/enemy-trojan.svg', emoji: '🐴', hp: 40, damage: 10, questionsPerRound: 2 },
-  { name: 'Bug', sprite: '/assets/enemy-bug.svg', emoji: '🐛', hp: 55, damage: 12, questionsPerRound: 2 },
-  { name: 'Malware', sprite: '/assets/enemy-malware.svg', emoji: '🦠', hp: 70, damage: 15, questionsPerRound: 2 },
-  { name: 'Ransomware', sprite: '/assets/enemy-ransomware.svg', emoji: '🔒💀', hp: 85, damage: 18, questionsPerRound: 2 },
-  { name: 'Hacker Oscuro', sprite: '/assets/enemy-hacker.svg', emoji: '👤💻', hp: 100, damage: 20, questionsPerRound: 3 },
-  { name: 'Dragón del Servidor', sprite: '/assets/enemy-dragon.svg', emoji: '🐉🖥️', hp: 150, damage: 25, questionsPerRound: 4 },
+  { name: 'Apple II (1977)', sprite: '/assets/enemy-trojan.svg', emoji: '🍏', hp: 40, damage: 10, questionsPerRound: 2 },
+  { name: 'Apple Lisa (1983)', sprite: '/assets/enemy-bug.svg', emoji: '🖥️', hp: 55, damage: 12, questionsPerRound: 2 },
+  { name: 'Macintosh 128K (1984)', sprite: '/assets/enemy-malware.svg', emoji: '💻', hp: 70, damage: 15, questionsPerRound: 2 },
+  { name: 'Mac OS Clásico (1997)', sprite: '/assets/enemy-ransomware.svg', emoji: '💾', hp: 85, damage: 18, questionsPerRound: 2 },
+  { name: 'NeXTSTEP & OS X (2001)', sprite: '/assets/enemy-hacker.svg', emoji: '⚙️', hp: 100, damage: 20, questionsPerRound: 3 },
+  { name: 'visionOS & Cupertino (2024)', sprite: '/assets/enemy-dragon.svg', emoji: '🍎', hp: 150, damage: 25, questionsPerRound: 4 },
 ];
 
 const DIFFICULTY_MULTIPLIERS = {

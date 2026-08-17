@@ -2,28 +2,28 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="🐧 Linux Quest — Derrota al Dragón del Servidor">
+<Layout title="🍎 Mac Quest — Retrospectiva & Evolución de Macintosh">
   <div id="game-container">
 
     <!-- ========================================
          SCREEN: TITLE
          ======================================== -->
     <section class="screen active" id="screen-title">
-      <div class="game-logo">🐧⚔️🐉</div>
-      <h1 class="game-title" id="game-title">Linux Quest</h1>
-      <p class="game-subtitle">Derrota al Dragón del Servidor</p>
+      <div class="game-logo">🍎</div>
+      <h1 class="game-title" id="game-title">Mac Quest</h1>
+      <p class="game-subtitle">Retrospectiva & Evolución de Macintosh</p>
 
       <div class="title-input-group">
         <input
           type="text"
           class="player-name-input"
           id="player-name"
-          placeholder="Tu nombre, héroe..."
+          placeholder="Tu nombre, participante..."
           maxlength="20"
           autocomplete="off"
         />
         <button class="btn btn-primary" id="btn-start">
-          ⚔️ Comenzar Aventura
+          🍎 Comenzar Trivia
         </button>
         <button class="btn btn-secondary" id="btn-leaderboard-view">
           🏆 Leaderboard
@@ -35,25 +35,25 @@ import Layout from '../layouts/Layout.astro';
          SCREEN: DIFFICULTY
          ======================================== -->
     <section class="screen" id="screen-difficulty">
-      <h2 class="difficulty-title">Elige tu Destino</h2>
+      <h2 class="difficulty-title">Selecciona la Dificultad</h2>
 
       <div class="difficulty-options">
         <div class="difficulty-card" data-difficulty="easy" id="diff-easy">
-          <div class="difficulty-emoji">🌿</div>
+          <div class="difficulty-emoji">🍏</div>
           <div class="difficulty-name">Fácil</div>
-          <div class="difficulty-desc">Para aprendices<br/>Daño x1 · Enemigos débiles</div>
+          <div class="difficulty-desc">20 Preguntas Fundacionales<br/>Conceptos, fechas clave y nombres principales</div>
         </div>
 
         <div class="difficulty-card" data-difficulty="normal" id="diff-normal">
-          <div class="difficulty-emoji">⚔️</div>
-          <div class="difficulty-name">Normal</div>
-          <div class="difficulty-desc">Para guerreros<br/>Daño x1.5 · Enemigos fuertes</div>
+          <div class="difficulty-emoji">💻</div>
+          <div class="difficulty-name">Medio</div>
+          <div class="difficulty-desc">20 Preguntas Técnicas<br/>Arquitectura de SO, proyectos y prototipos</div>
         </div>
 
         <div class="difficulty-card" data-difficulty="hard" id="diff-hard">
-          <div class="difficulty-emoji">💀</div>
+          <div class="difficulty-emoji">🧠</div>
           <div class="difficulty-name">Difícil</div>
-          <div class="difficulty-desc">Para leyendas<br/>Daño x2 · Enemigos letales</div>
+          <div class="difficulty-desc">20 Preguntas Avanzadas<br/>Specs exactos, citas históricas y detalles del kernel</div>
         </div>
       </div>
     </section>
@@ -80,13 +80,13 @@ import Layout from '../layouts/Layout.astro';
         <!-- Player -->
         <div class="character" id="player-character">
           <div class="character-header">
-            <div class="character-name" id="player-display-name">Héroe</div>
+            <div class="character-name" id="player-display-name">Participante</div>
             <div class="hp-bar-container">
               <div class="hp-bar-fill" id="player-hp-bar" style="width: 100%"></div>
               <div class="hp-text" id="player-hp-text">100/100</div>
             </div>
           </div>
-          <div class="character-sprite" id="player-sprite">🧙‍♂️</div>
+          <div class="character-sprite" id="player-sprite">👨‍💻</div>
           <div class="damage-number" id="player-damage">-0</div>
         </div>
 
@@ -99,13 +99,13 @@ import Layout from '../layouts/Layout.astro';
         <!-- Enemy -->
         <div class="character" id="enemy-character">
           <div class="character-header">
-            <div class="character-name" id="enemy-name">Slime</div>
+            <div class="character-name" id="enemy-name">Desafío Mac</div>
             <div class="hp-bar-container">
               <div class="hp-bar-fill" id="enemy-hp-bar" style="width: 100%"></div>
               <div class="hp-text" id="enemy-hp-text">50/50</div>
             </div>
           </div>
-          <div class="character-sprite" id="enemy-sprite">🟢</div>
+          <div class="character-sprite" id="enemy-sprite">🍎</div>
           <div class="damage-number" id="enemy-damage">-0</div>
         </div>
       </div>
@@ -121,9 +121,9 @@ import Layout from '../layouts/Layout.astro';
 
       <!-- Question -->
       <div class="question-panel" id="question-panel">
-        <div class="question-category" id="question-category">Ciencia</div>
+        <div class="question-category" id="question-category">Historia</div>
         <div class="question-text" id="question-text">
-          ¿Pregunta aquí?
+          ¿Pregunta sobre Macintosh aquí?
         </div>
       </div>
 
@@ -153,7 +153,7 @@ import Layout from '../layouts/Layout.astro';
          ======================================== -->
     <section class="screen" id="screen-victory">
       <div class="victory-title">🏆 ¡VICTORIA!</div>
-      <p class="game-subtitle" style="margin-top: -10px;">¡Has derrotado al Dragón del Servidor!</p>
+      <p class="game-subtitle" style="margin-top: -10px;">¡Has completado la Trivia de Mac Quest!</p>
 
       <div class="result-stats" id="victory-stats">
         <div class="stat-item">
@@ -191,8 +191,8 @@ import Layout from '../layouts/Layout.astro';
          SCREEN: DEFEAT
          ======================================== -->
     <section class="screen" id="screen-defeat">
-      <div class="defeat-title">💀 DERROTA</div>
-      <p class="game-subtitle" style="margin-top: -10px;">El enemigo te ha vencido...</p>
+      <div class="defeat-title">💀 TIEMPO AGOTADO</div>
+      <p class="game-subtitle" style="margin-top: -10px;">Te has quedado sin intentos en el Desafío Mac...</p>
 
       <div class="result-stats" id="defeat-stats">
         <div class="stat-item">
@@ -249,8 +249,8 @@ import Layout from '../layouts/Layout.astro';
          ======================================== -->
     <div class="round-overlay" id="round-overlay">
       <div class="round-text" id="round-text">Ronda 1</div>
-      <div class="enemy-intro" id="enemy-intro-name">¡Un Slime aparece!</div>
-      <div class="enemy-intro-sprite" id="enemy-intro-sprite">🟢</div>
+      <div class="enemy-intro" id="enemy-intro-name">¡Pregunta de Macintosh!</div>
+      <div class="enemy-intro-sprite" id="enemy-intro-sprite">🍎</div>
     </div>
 
   </div>
