@@ -1,0 +1,1548 @@
+/* ==========================================================================
+   SWISS MINIMALIST PRESENTATION SYSTEM — MAC RETROSPECTIVE
+   Estilo Tipográfico Internacional (Swiss Style) / Josef Müller-Brockmann aesthetic
+   ========================================================================== */
+
+:root {
+  /* Paleta Suiza Auténtica */
+  --color-bg: #F4F4F6;
+  --color-surface: #FFFFFF;
+  --color-ink: #0C0C0E;
+  --color-ink-secondary: #5A5A62;
+  --color-ink-muted: #8E8E98;
+  --color-border: #D8D8DF;
+  --color-border-subtle: #EBEBEF;
+  --color-swiss-red: #E60000;
+  --color-swiss-red-hover: #C50000;
+  --color-dark-bg: #0C0C0E;
+  --color-dark-surface: #17171B;
+  --color-dark-ink: #F5F5F7;
+  --color-dark-muted: #8A8A93;
+
+  /* Tipografías */
+  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+
+  /* Retícula & Espaciado Suizo */
+  --grid-gap: 2rem;
+  --header-height: 64px;
+  --dock-height: 72px;
+  --radius-swiss: 0px; /* Rigor geométrico suizo */
+  --radius-pill: 9999px;
+  --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Reset y Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  user-select: none;
+}
+
+/* Retícula de Guías Suizas */
+.swiss-grid-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.18;
+  transition: opacity 0.3s ease;
+}
+
+.swiss-grid-overlay.hidden {
+  opacity: 0;
+}
+
+.grid-col {
+  border-right: 1px dashed #70707c;
+  height: 100%;
+}
+
+.grid-col:last-child {
+  border-right: none;
+}
+
+/* Marcadores de Esquina Suizos */
+.swiss-corner-mark {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--color-ink-muted);
+  text-transform: uppercase;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.top-left { top: 24px; left: 32px; }
+.top-right { top: 24px; right: 32px; }
+.bottom-left { bottom: 24px; left: 32px; }
+.bottom-right { bottom: 24px; right: 32px; }
+
+.swiss-plus {
+  color: var(--color-swiss-red);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.swiss-badge-red {
+  background-color: var(--color-swiss-red);
+  color: white;
+  padding: 1px 6px;
+  font-weight: 700;
+  font-size: 9px;
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   INTRO / HERO STAGE: TÍTULO MONUMENTAL "MAC" CON ZOOM-OUT
+   ========================================================================== */
+
+.intro-hero-stage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ECECEE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 2rem;
+  overflow: hidden;
+  transition: opacity 0.8s var(--transition-smooth), transform 0.8s var(--transition-smooth);
+}
+
+.intro-hero-stage.stage-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.96);
+}
+
+.hero-center-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 960px;
+  z-index: 5;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-ink-secondary);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0,0,0,0.04);
+  padding: 6px 14px;
+  border: 1px solid var(--color-border);
+}
+
+.dot-live {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--color-swiss-red);
+  animation: pulseLive 1.5s infinite ease-in-out;
+}
+
+@keyframes pulseLive {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+/* MONUMENTAL MAC & INTERACTIVE SWISS APPLE */
+.monumental-mac-wrapper {
+  position: relative;
+  margin: 0.5rem 0 1.5rem 0;
+  cursor: pointer;
+  perspective: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+}
+
+/* Emblema de la Manzana Suiza */
+.monumental-header-emblem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  z-index: 10;
+}
+
+.apple-interactive-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 18px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid var(--color-border);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 4px;
+  transition: all 0.3s var(--transition-smooth);
+}
+
+.monumental-mac-wrapper:hover .apple-interactive-container {
+  border-color: var(--color-ink);
+  background: #FFFFFF;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  transform: translateY(-3px) scale(1.04);
+}
+
+.swiss-apple-logo {
+  color: var(--color-ink);
+  transform-origin: center center;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.06));
+}
+
+.monumental-mac-wrapper:hover .swiss-apple-logo {
+  color: var(--color-dark-bg);
+}
+
+.apple-interactive-container.is-bitten .swiss-apple-logo {
+  color: var(--color-ink);
+}
+
+.apple-status-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+
+.status-code {
+  color: var(--color-ink-muted);
+}
+
+.status-state {
+  color: var(--color-ink);
+  background: var(--color-bg);
+  padding: 1px 6px;
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  transition: all 0.25s ease;
+}
+
+.apple-interactive-container.is-bitten .status-state {
+  background: var(--color-swiss-red);
+  color: #FFFFFF;
+  border-color: var(--color-swiss-red);
+}
+
+/* Partículas del mordisco */
+.bite-sparkles {
+  position: absolute;
+  top: 38%;
+  right: 18%;
+  pointer-events: none;
+  width: 30px;
+  height: 30px;
+}
+
+.sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background-color: var(--color-swiss-red);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0);
+}
+
+.sparkle.sp-1 { top: 0; right: 0; }
+.sparkle.sp-2 { top: 8px; right: -8px; background-color: var(--color-ink); }
+.sparkle.sp-3 { top: 16px; right: -4px; }
+.sparkle.sp-4 { top: 22px; right: 4px; background-color: var(--color-ink); }
+.sparkle.sp-5 { top: 12px; right: 10px; }
+
+.mac-giant-title {
+  font-family: var(--font-display);
+  font-size: clamp(6.5rem, 21vw, 19rem);
+  font-weight: 800;
+  line-height: 0.85;
+  letter-spacing: -0.07em;
+  color: var(--color-ink);
+  text-transform: uppercase;
+  transform-origin: center center;
+  transition: transform 0.4s var(--transition-fast), color 0.3s ease, letter-spacing 0.4s ease;
+  position: relative;
+}
+
+.monumental-mac-wrapper:hover .mac-giant-title {
+  letter-spacing: -0.04em;
+  transform: scale(1.03);
+  color: var(--color-dark-bg);
+}
+
+.mac-glitch-layer {
+  display: none;
+}
+
+.hero-subtitle {
+  font-size: clamp(1.1rem, 2vw, 1.45rem);
+  font-weight: 400;
+  color: var(--color-ink-secondary);
+  max-width: 680px;
+  line-height: 1.45;
+  margin-bottom: 2.5rem;
+  letter-spacing: -0.01em;
+}
+
+.swiss-cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background-color: var(--color-ink);
+  color: #FFFFFF;
+  border: 1px solid var(--color-ink);
+  padding: 16px 36px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s var(--transition-smooth);
+}
+
+.swiss-cta-button:hover {
+  background-color: var(--color-swiss-red);
+  border-color: var(--color-swiss-red);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(230, 0, 0, 0.25);
+}
+
+.swiss-cta-button:active {
+  transform: translateY(0);
+}
+
+.cta-icon {
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.swiss-cta-button:hover .cta-icon {
+  transform: translateX(4px);
+}
+
+.hero-hint {
+  margin-top: 2rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-ink-muted);
+  letter-spacing: 0.05em;
+}
+
+.key-badge {
+  background: white;
+  border: 1px solid var(--color-border);
+  padding: 2px 7px;
+  font-weight: 700;
+  color: var(--color-ink);
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   HEADER PERMANENTE
+   ========================================================================== */
+
+.main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-height);
+  background-color: rgba(244, 244, 246, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  z-index: 100;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.main-header.hidden-init {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-20px);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.brand-unit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 4px 8px;
+  margin-left: -8px;
+  transition: opacity 0.2s ease;
+}
+
+.brand-unit:hover {
+  opacity: 0.7;
+}
+
+.brand-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.04em;
+  color: var(--color-ink);
+}
+
+.brand-divider {
+  color: var(--color-swiss-red);
+  font-weight: 700;
+}
+
+.brand-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--color-ink-secondary);
+}
+
+.current-section-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-ink);
+  background: white;
+  border: 1px solid var(--color-border);
+  padding: 4px 10px;
+  text-transform: uppercase;
+}
+
+.header-center {
+  display: flex;
+  align-items: center;
+}
+
+.sections-nav-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  border: 1px solid var(--color-border);
+  padding: 6px 12px;
+}
+
+.nav-dot {
+  width: 22px;
+  height: 6px;
+  background-color: var(--color-border);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-dot:hover {
+  background-color: var(--color-ink-muted);
+}
+
+.nav-dot.active {
+  background-color: var(--color-swiss-red);
+  width: 36px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.control-icon-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--color-border);
+  background: white;
+  color: var(--color-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.control-icon-btn:hover {
+  background-color: var(--color-ink);
+  color: white;
+  border-color: var(--color-ink);
+}
+
+.control-icon-btn i {
+  width: 16px;
+  height: 16px;
+}
+
+/* ==========================================================================
+   VIEWPORT PRINCIPAL DE DIAPOSITIVAS (SLIDESHOW)
+   ========================================================================== */
+
+.presentation-viewport {
+  position: relative;
+  width: 100vw;
+  height: calc(100vh - var(--header-height) - var(--dock-height));
+  margin-top: var(--header-height);
+  overflow: hidden;
+}
+
+.slide-section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 3rem;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: opacity;
+}
+
+.slide-container,
+.swiss-info-card,
+.pillar-card,
+.timeline-entry,
+.catalog-card,
+.block-step,
+.family-card,
+.image-frame-swiss,
+.tech-spec-bar {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+.slide-section.active-slide {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+.slide-section.prev-slide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.slide-container {
+  width: 100%;
+  max-width: 1440px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Meta Row Superior */
+.slide-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.index-item {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.swiss-num {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--color-swiss-red);
+}
+
+.slash {
+  color: var(--color-ink-muted);
+}
+
+.total-num {
+  color: var(--color-ink-muted);
+  font-weight: 700;
+}
+
+.category-item {
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: var(--color-ink-secondary);
+}
+
+.tag-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.08em;
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.swiss-flag-dot {
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-swiss-red);
+  display: inline-block;
+}
+
+/* Layout Principal de la Diapositiva */
+.slide-main-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 3rem;
+  height: calc(100% - 48px);
+  align-items: center;
+}
+
+/* Columna de Texto */
+.slide-text-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding-right: 1rem;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.slide-text-col::-webkit-scrollbar {
+  display: none;
+}
+
+.slide-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.4vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: var(--color-ink);
+  margin-bottom: 1rem;
+}
+
+.highlight-title {
+  color: var(--color-ink);
+  position: relative;
+  display: inline-block;
+}
+
+.editorial-lead {
+  font-size: 1.15rem;
+  line-height: 1.45;
+  color: var(--color-ink-secondary);
+  margin-bottom: 1.5rem;
+  font-weight: 400;
+  border-left: 3px solid var(--color-swiss-red);
+  padding-left: 14px;
+}
+
+/* Tarjetas de Información */
+.cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.swiss-info-card {
+  background: white;
+  border: 1px solid var(--color-border);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.swiss-info-card:hover {
+  border-color: var(--color-ink);
+  transform: translateY(-2px);
+}
+
+.swiss-info-card.highlight-card {
+  border-top: 3px solid var(--color-swiss-red);
+}
+
+.card-num-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.card-tag {
+  background: var(--color-ink);
+  color: white;
+  padding: 2px 6px;
+  font-weight: 700;
+}
+
+.card-tag.red {
+  background: var(--color-swiss-red);
+}
+
+.card-status {
+  letter-spacing: 0.1em;
+  color: var(--color-ink-muted);
+  font-weight: 700;
+}
+
+.card-heading {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  margin-top: 4px;
+}
+
+.card-body {
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--color-ink-secondary);
+}
+
+.card-body strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+/* Cita Suiza */
+.swiss-quote-block {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  margin-top: 0.5rem;
+  background: rgba(0, 0, 0, 0.03);
+  padding: 12px 16px;
+  border: 1px solid var(--color-border);
+}
+
+.quote-bar {
+  width: 4px;
+  background-color: var(--color-swiss-red);
+}
+
+.quote-text {
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--color-ink);
+  line-height: 1.4;
+}
+
+/* Tres Pilares (Slide 2) */
+.three-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.pillar-card {
+  background: white;
+  border: 1px solid var(--color-border);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pillar-icon-box {
+  width: 32px;
+  height: 32px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-ink);
+  margin-bottom: 4px;
+}
+
+.pillar-icon-box i {
+  width: 16px;
+  height: 16px;
+}
+
+.pillar-card h4 {
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.pillar-card p {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--color-ink-secondary);
+}
+
+.manifesto-box {
+  background: var(--color-ink);
+  color: white;
+  padding: 1rem 1.25rem;
+  border-left: 4px solid var(--color-swiss-red);
+}
+
+.manifesto-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--color-swiss-red);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.manifesto-body {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* Timeline Evolución (Slide 3) */
+.timeline-evolution-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.timeline-entry {
+  background: white;
+  border: 1px solid var(--color-border);
+  padding: 1.15rem;
+}
+
+.entry-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.entry-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--color-ink);
+  color: white;
+  padding: 2px 7px;
+}
+
+.entry-tag.red {
+  background: var(--color-swiss-red);
+}
+
+.entry-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.entry-desc {
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--color-ink-secondary);
+}
+
+.entry-desc strong {
+  color: var(--color-ink);
+}
+
+.swiss-alert-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #FFF0F0;
+  border: 1px solid #FFCCCC;
+  padding: 10px 14px;
+  color: #900000;
+  font-size: 0.88rem;
+}
+
+.alert-icon i {
+  width: 18px;
+  height: 18px;
+  color: var(--color-swiss-red);
+}
+
+/* Catálogo de Archivo (Slide 4) */
+.archive-catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem;
+}
+
+.catalog-card {
+  background: white;
+  border: 1px solid var(--color-border);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.catalog-card.alert-catalog {
+  border-left: 3px solid var(--color-swiss-red);
+}
+
+.catalog-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--color-ink-muted);
+  margin-bottom: 6px;
+}
+
+.catalog-badge.red {
+  color: var(--color-swiss-red);
+}
+
+.catalog-title {
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--color-ink);
+  margin-bottom: 6px;
+}
+
+.catalog-text {
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--color-ink-secondary);
+  margin-bottom: 8px;
+}
+
+.catalog-meta {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--color-ink-muted);
+  border-top: 1px dashed var(--color-border);
+  padding-top: 6px;
+}
+
+/* Bloques NeXT & OS X (Slide 5) */
+.next-step-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.block-step {
+  background: white;
+  border: 1px solid var(--color-border);
+  padding: 1.15rem;
+  display: flex;
+  gap: 14px;
+}
+
+.block-step.highlight-step {
+  border-left: 4px solid var(--color-swiss-red);
+}
+
+.step-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--color-ink);
+  color: white;
+  padding: 4px 8px;
+  height: fit-content;
+  white-space: nowrap;
+}
+
+.step-badge.red {
+  background: var(--color-swiss-red);
+}
+
+.step-content h4 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-ink);
+  margin-bottom: 4px;
+}
+
+.step-content p {
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--color-ink-secondary);
+}
+
+.quote-architectural {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.4;
+  background: var(--color-ink);
+  color: white;
+  padding: 1rem 1.25rem;
+  border-left: 4px solid var(--color-swiss-red);
+}
+
+/* Árbol Genealógico del Ecosistema (Slide 6) */
+.os-family-tree {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.family-card {
+  background: white;
+  border: 1px solid var(--color-border);
+  padding: 1rem;
+}
+
+.family-card.vision-card {
+  background: #0C0C0E;
+  color: white;
+  border-color: #0C0C0E;
+}
+
+.family-card.vision-card p {
+  color: #A0A0AB;
+}
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.os-code {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.os-code.spatial {
+  color: #FFFFFF;
+}
+
+.os-year {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  padding: 2px 6px;
+}
+
+.os-year.red {
+  background: var(--color-swiss-red);
+  color: white;
+}
+
+.family-card p {
+  font-size: 0.84rem;
+  line-height: 1.4;
+  color: var(--color-ink-secondary);
+}
+
+.summary-final-box {
+  background: rgba(0,0,0,0.04);
+  border: 1px solid var(--color-border);
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--color-ink);
+}
+
+/* ==========================================================================
+   COLUMNA VISUAL E IMAGEN ESTILO SUIZO
+   ========================================================================== */
+
+.slide-visual-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.image-frame-swiss {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9.5;
+  background: #000;
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+}
+
+.slide-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s var(--transition-smooth), filter 0.4s ease;
+}
+
+.image-frame-swiss:hover .slide-img {
+  transform: scale(1.03);
+}
+
+.frame-tag {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  background: rgba(12, 12, 14, 0.85);
+  color: #FFFFFF;
+  padding: 4px 8px;
+  z-index: 5;
+  backdrop-filter: blur(4px);
+}
+
+.top-left-tag {
+  top: 8px;
+  left: 8px;
+  border-left: 2px solid var(--color-swiss-red);
+}
+
+.bottom-right-tag {
+  bottom: 8px;
+  right: 8px;
+}
+
+.image-lens-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(circle at center, transparent 60%, rgba(0,0,0,0.2) 100%);
+}
+
+/* Barra de Especificaciones Técnicas */
+.tech-spec-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  background: white;
+  border: 1px solid var(--color-border);
+  border-top: none;
+}
+
+.spec-col {
+  padding: 10px 12px;
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.spec-col:last-child {
+  border-right: none;
+}
+
+.spec-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--color-ink-muted);
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+
+.spec-val {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+/* ==========================================================================
+   DOCK FLOTANTE INFERIOR
+   ========================================================================== */
+
+.presentation-dock {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: var(--dock-height);
+  background-color: rgba(244, 244, 246, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  z-index: 100;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.presentation-dock.hidden-init {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+}
+
+.dock-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.dock-title-caps {
+  color: var(--color-ink-muted);
+  font-weight: 700;
+}
+
+.dock-topic-label {
+  color: var(--color-ink);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.dock-center {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.dock-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  border: 1px solid var(--color-border);
+  color: var(--color-ink);
+  padding: 10px 18px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dock-nav-btn:hover:not(:disabled) {
+  background: var(--color-ink);
+  color: white;
+  border-color: var(--color-ink);
+}
+
+.dock-nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.dock-nav-btn i {
+  width: 14px;
+  height: 14px;
+}
+
+.dock-counter-display {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  background: white;
+  border: 1px solid var(--color-border);
+  padding: 8px 14px;
+}
+
+#counter-current {
+  font-size: 16px;
+  color: var(--color-swiss-red);
+}
+
+.counter-sep {
+  color: var(--color-ink-muted);
+}
+
+#counter-total {
+  font-size: 12px;
+  color: var(--color-ink-muted);
+}
+
+.dock-right {
+  display: flex;
+  align-items: center;
+}
+
+.keyboard-shortcuts-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: white;
+  border: 1px solid var(--color-border);
+  padding: 6px 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.keyboard-shortcuts-pill:hover {
+  background: var(--color-ink);
+  color: white;
+  border-color: var(--color-ink);
+}
+
+.keyboard-shortcuts-pill i {
+  width: 12px;
+  height: 12px;
+}
+
+/* ==========================================================================
+   MODAL DE ATAJOS DE TECLADO
+   ========================================================================== */
+
+.swiss-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.swiss-modal.modal-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(12, 12, 14, 0.7);
+  backdrop-filter: blur(8px);
+}
+
+.modal-window {
+  position: relative;
+  background: var(--color-bg);
+  border: 2px solid var(--color-ink);
+  width: 90%;
+  max-width: 540px;
+  z-index: 10;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+}
+
+.modal-header {
+  background: var(--color-ink);
+  color: white;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+}
+
+.modal-close-btn:hover {
+  color: var(--color-swiss-red);
+}
+
+.modal-close-btn i {
+  width: 16px;
+  height: 16px;
+}
+
+.modal-body {
+  padding: 1.5rem 2rem;
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-ink);
+  margin-bottom: 1.25rem;
+}
+
+.shortcuts-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shortcut-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: white;
+  border: 1px solid var(--color-border);
+}
+
+.key-combo kbd {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  padding: 3px 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.key-desc {
+  font-size: 0.88rem;
+  color: var(--color-ink-secondary);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (MEDIA QUERIES)
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .slide-main-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    height: auto;
+  }
+
+  .presentation-viewport {
+    height: calc(100vh - var(--header-height) - var(--dock-height));
+    overflow-y: auto;
+  }
+
+  .slide-section {
+    position: relative;
+    height: auto;
+    min-height: 100%;
+    padding: 1rem 1.5rem;
+  }
+
+  .slide-text-col {
+    padding-right: 0;
+  }
+
+  .cards-grid, .three-pillars-grid, .archive-catalog-grid, .os-family-tree {
+    grid-template-columns: 1fr;
+  }
+
+  .dock-left, .dock-right {
+    display: none;
+  }
+
+  .dock-center {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 640px) {
+  .main-header {
+    padding: 0 1rem;
+  }
+
+  .current-section-badge {
+    display: none;
+  }
+
+  .swiss-corner-mark {
+    display: none;
+  }
+
+  .hero-center-content {
+    padding: 1rem;
+  }
+
+  .mac-giant-title {
+    font-size: clamp(4.5rem, 25vw, 9rem);
+  }
+}

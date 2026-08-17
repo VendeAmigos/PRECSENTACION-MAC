@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAC — Retrospectiva & Evolución | Swiss Minimalist Archive</title>
+  <meta name="description" content="Presentación interactiva de estética suiza minimalista sobre la historia del Macintosh, desde el Apple Lisa y 1984 hasta NeXTSTEP, Mac OS X y visionOS.">
+  
+  <!-- Google Fonts: Space Grotesk & Inter para autenticidad tipográfica suiza -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="swiss-grid-active theme-monochrome">
+
+  <!-- Retícula de Guías Suizas (Grid Overlay) -->
+  <div class="swiss-grid-overlay" aria-hidden="true">
+    <div class="grid-col"></div>
+    <div class="grid-col"></div>
+    <div class="grid-col"></div>
+    <div class="grid-col"></div>
+    <div class="grid-col"></div>
+    <div class="grid-col"></div>
+  </div>
+
+  <!-- INTRO / HERO STAGE: ZOOM-OUT & MORPHING CANVAS -->
+  <div id="intro-hero" class="intro-hero-stage" role="banner">
+    <!-- Marcadores de coordenadas suizas -->
+    <div class="swiss-corner-mark top-left">CH-1984 // 47.3769° N, 8.5417° E</div>
+    <div class="swiss-corner-mark top-right"><span class="swiss-plus">+</span> TYPOGRAFIE MONOGRAPH</div>
+    <div class="swiss-corner-mark bottom-left">SYSTEM.MAC.01 // REVOLUCIÓN GRÁFICA</div>
+    <div class="swiss-corner-mark bottom-right"><span class="swiss-badge-red">CH</span> ARCHIV EDITION</div>
+
+    <div class="hero-center-content">
+      <div class="hero-eyebrow">
+        <span class="dot-live"></span> UNA RETROSPECTIVA INTERACTIVA DE COMPUTACIÓN Y DISEÑO
+      </div>
+      
+      <!-- TÍTULO MONUMENTAL MAC CON EFECTO DE ZOOM Y MANZANA INTERACTIVA -->
+      <div class="monumental-mac-wrapper" id="mac-monument" title="Haz clic en MAC o la manzana para morderla y entrar">
+        
+        <!-- Emblema de la Manzana Suiza (Interactiva) -->
+        <div class="monumental-header-emblem" id="apple-emblem-wrapper">
+          <div class="apple-interactive-container" id="apple-interactive">
+            <svg class="swiss-apple-logo" id="hero-apple-svg" viewBox="0 0 200 220" width="80" height="88" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <!-- Máscara SVG del Mordisco -->
+                <mask id="apple-bite-mask">
+                  <rect x="0" y="0" width="200" height="220" fill="white" />
+                  <!-- Forma del Mordisco (inicia en scale 0 = manzana entera) -->
+                  <g id="bite-shape" transform="translate(142, 115) scale(0)">
+                    <circle cx="0" cy="0" r="34" fill="black" />
+                    <circle cx="10" cy="-14" r="15" fill="black" />
+                    <circle cx="10" cy="14" r="15" fill="black" />
+                  </g>
+                </mask>
+              </defs>
+              
+              <!-- Hoja superior de la manzana -->
+              <path class="apple-leaf" d="M 124,18 C 137,34 131,54 116,64 C 103,50 109,30 124,18 Z" fill="currentColor" />
+              
+              <!-- Cuerpo simétrico de la manzana (se muerde con la máscara) -->
+              <path class="apple-body" mask="url(#apple-bite-mask)" d="M 100,68 C 88,68 76,60 62,60 C 38,60 15,82 15,122 C 15,162 42,208 64,208 C 76,208 84,200 100,200 C 116,200 124,208 136,208 C 158,208 185,162 185,122 C 185,82 162,60 138,60 C 124,60 112,68 100,68 Z" fill="currentColor" />
+            </svg>
+
+            <!-- Destellos / Partículas suizas expulsadas con el mordisco -->
+            <div class="bite-sparkles" id="bite-sparkles" aria-hidden="true">
+              <span class="sparkle sp-1"></span>
+              <span class="sparkle sp-2"></span>
+              <span class="sparkle sp-3"></span>
+              <span class="sparkle sp-4"></span>
+              <span class="sparkle sp-5"></span>
+            </div>
+
+            <!-- Etiqueta técnica suiza del estado de la manzana -->
+            <div class="apple-status-tag" id="apple-status-tag">
+              <span class="status-code">EMBLEM:</span>
+              <span class="status-state" id="apple-state-text">INTACTA</span>
+            </div>
+          </div>
+        </div>
+
+        <h1 class="mac-giant-title" id="mac-text">MAC</h1>
+        <div class="mac-glitch-layer" aria-hidden="true">MAC</div>
+      </div>
+
+      <p class="hero-subtitle">
+        De la pantalla negra con comandos al lienzo gráfico de Steve Jobs y la computación espacial.
+      </p>
+
+      <button id="btn-start-presentation" class="swiss-cta-button" aria-label="Comenzar presentación">
+        <span class="cta-text">INICIAR PRESENTACIÓN</span>
+        <span class="cta-icon">
+          <i data-lucide="arrow-right"></i>
+        </span>
+        <span class="cta-pulse"></span>
+      </button>
+
+      <div class="hero-hint">
+        <span class="key-badge">ESPACIO</span> o <span class="key-badge">CLIC</span> PARA TRANSFORMAR Y ENTRAR
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER PERMANENTE (APARECE TRAS EL MORPHING) -->
+  <header id="main-header" class="main-header hidden-init">
+    <div class="header-left">
+      <div class="brand-unit" id="brand-clickable" title="Volver al inicio">
+        <span class="brand-title">MAC</span>
+        <span class="brand-divider">/</span>
+        <span class="brand-label">SWISS ARCHIVE</span>
+      </div>
+      <div class="current-section-badge" id="header-active-topic">
+        01 / 06 — LOS INICIOS
+      </div>
+    </div>
+
+    <div class="header-center">
+      <nav class="sections-nav-dots" id="nav-dots">
+        <button class="nav-dot active" data-slide="0" title="01. Los Inicios (Lisa & Apple II)"></button>
+        <button class="nav-dot" data-slide="1" title="02. 1984 Macintosh"></button>
+        <button class="nav-dot" data-slide="2" title="03. Mac OS Clásico"></button>
+        <button class="nav-dot" data-slide="3" title="04. Sistemas Históricos"></button>
+        <button class="nav-dot" data-slide="4" title="05. NeXT & Mac OS X"></button>
+        <button class="nav-dot" data-slide="5" title="06. El Legado y Futuro"></button>
+      </nav>
+    </div>
+
+    <div class="header-right">
+      <button class="control-icon-btn" id="btn-toggle-sound" title="Alternar audio ambiental / efectos" aria-label="Sonido">
+        <i data-lucide="volume-2" id="sound-icon"></i>
+      </button>
+      <button class="control-icon-btn" id="btn-toggle-grid" title="Alternar retícula suiza de diseño" aria-label="Retícula">
+        <i data-lucide="grid"></i>
+      </button>
+      <button class="control-icon-btn" id="btn-toggle-fullscreen" title="Pantalla completa" aria-label="Pantalla completa">
+        <i data-lucide="maximize" id="fs-icon"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- CONTENEDOR PRINCIPAL DE PRESENTACIÓN (SLIDESHOW INTERACTIVO) -->
+  <main id="presentation-viewport" class="presentation-viewport">
+    
+    <!-- ========================================================
+         SLIDE 1: LOS INICIOS (ANTES DEL MAC & PROYECTO LISA)
+         ======================================================== -->
+    <section class="slide-section active-slide" id="slide-0" data-theme="retro-terminal">
+      <div class="slide-container">
+        
+        <!-- Header de la Diapositiva -->
+        <div class="slide-meta-row">
+          <div class="meta-item index-item">
+            <span class="swiss-num">01</span>
+            <span class="slash">/</span>
+            <span class="total-num">06</span>
+          </div>
+          <div class="meta-item category-item">ÉPOCA FUNDACIONAL // 1977 — 1983</div>
+          <div class="meta-item tag-item">
+            <span class="swiss-flag-dot"></span> LÍNEA DE COMANDOS → PRIMERA GUI
+          </div>
+        </div>
+
+        <div class="slide-main-layout">
+          <!-- Columna Izquierda: Texto y Contenido Estructurado -->
+          <div class="slide-text-col">
+            <h2 class="slide-title">
+              Los Inicios:<br>
+              <span class="highlight-title">Antes del Mac</span> y el Proyecto Lisa
+            </h2>
+
+            <div class="editorial-lead">
+              Antes de que existiera el Mac, las computadoras eran máquinas complejas que funcionaban mediante líneas de comando con pantallas monocromáticas oscuras y texto en fósforo verde o blanco.
+            </div>
+
+            <div class="cards-grid">
+              <!-- Tarjeta 1: Apple II -->
+              <div class="swiss-info-card">
+                <div class="card-num-header">
+                  <span class="card-tag">1977</span>
+                  <span class="card-status">PRODUCCIÓN MASIVA</span>
+                </div>
+                <h3 class="card-heading">El Apple II</h3>
+                <p class="card-body">
+                  Uno de los primeros microcomputadores producidos a gran escala y el gran éxito comercial de Apple. Sin embargo, seguía dependiendo enteramente de comandos de texto y memorización de sintaxis.
+                </p>
+              </div>
+
+              <!-- Tarjeta 2: Apple Lisa -->
+              <div class="swiss-info-card highlight-card">
+                <div class="card-num-header">
+                  <span class="card-tag red">1983</span>
+                  <span class="card-status">EL VERDADERO PIONERO</span>
+                </div>
+                <h3 class="card-heading">El Apple Lisa</h3>
+                <p class="card-body">
+                  La primera computadora comercial de Apple en incluir una <strong>Interfaz Gráfica de Usuario (GUI)</strong> y un mouse. A pesar de costar casi <strong>$10,000 USD</strong> y ser lenta (un fracaso comercial), sentó las bases irremplazables de la computación moderna.
+                </p>
+              </div>
+            </div>
+
+            <!-- Cita suiza / dato técnico -->
+            <div class="swiss-quote-block">
+              <div class="quote-bar"></div>
+              <p class="quote-text">«Lisa fue el laboratorio heroico que absorbió el costo del futuro para que el Macintosh pudiera democratizarlo.»</p>
+            </div>
+          </div>
+
+          <!-- Columna Derecha: Imagen & Ficha Técnica -->
+          <div class="slide-visual-col">
+            <div class="image-frame-swiss">
+              <div class="frame-tag top-left-tag">FIG. 01 — LISA & APPLE II</div>
+              <div class="frame-tag bottom-right-tag">ARCHIV MUSEUM // ZÜRICH</div>
+              <img src="./assets/images/section1_lisa_apple2.jpg" alt="Apple Lisa y Apple II en pedestal minimalista estilo suizo" class="slide-img" />
+              <div class="image-lens-overlay"></div>
+            </div>
+            
+            <div class="tech-spec-bar">
+              <div class="spec-col">
+                <span class="spec-label">PRECIO LISA (1983)</span>
+                <span class="spec-val">$9,995 USD</span>
+              </div>
+              <div class="spec-col">
+                <span class="spec-label">INTERFAZ</span>
+                <span class="spec-val">GUI + Ratón</span>
+              </div>
+              <div class="spec-col">
+                <span class="spec-label">PROCESADOR</span>
+                <span class="spec-val">Motorola 68000 @ 5 MHz</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SLIDE 2: 1984 — LA REVOLUCIÓN DEL MACINTOSH
+         ======================================================== -->
+    <section class="slide-section" id="slide-1" data-theme="mac-1984">
+      <div class="slide-container">
+        
+        <div class="slide-meta-row">
+          <div class="meta-item index-item">
+            <span class="swiss-num">02</span>
+            <span class="slash">/</span>
+            <span class="total-num">06</span>
+          </div>
+          <div class="meta-item category-item">PUNTO DE INFLEXIÓN // 24 ENERO 1984</div>
+          <div class="meta-item tag-item">
+            <span class="swiss-flag-dot"></span> "FOR THE REST OF US"
+          </div>
+        </div>
+
+        <div class="slide-main-layout">
+          <div class="slide-text-col">
+            <h2 class="slide-title">
+              1984:<br>
+              <span class="highlight-title">La Revolución</span> del Macintosh
+            </h2>
+
+            <div class="editorial-lead">
+              El 24 de enero de 1984, Steve Jobs presentó el Macintosh 128K en Cupertino. Este acontecimiento cambió para siempre el destino de la interacción humano-computadora.
+            </div>
+
+            <div class="three-pillars-grid">
+              <div class="pillar-card">
+                <div class="pillar-icon-box">
+                  <i data-lucide="mouse-pointer"></i>
+                </div>
+                <h4>"Para el resto de nosotros"</h4>
+                <p>Democratizó la informática. Apuntar y hacer clic en iconos reconocibles: carpetas, documentos y papelera con el cursor.</p>
+              </div>
+
+              <div class="pillar-card">
+                <div class="pillar-icon-box">
+                  <i data-lucide="monitor"></i>
+                </div>
+                <h4>Diseño Todo-en-Uno</h4>
+                <p>Monitor CRT y circuitería integrados en una carcasa compacta y amigable con un asa superior para transportarlo.</p>
+              </div>
+
+              <div class="pillar-card">
+                <div class="pillar-icon-box">
+                  <i data-lucide="clapperboard"></i>
+                </div>
+                <h4>El Comercial "1984"</h4>
+                <p>Obra maestra de Ridley Scott transmitida en el Super Bowl: el Mac como el salvador frente al monopolio corporativo.</p>
+              </div>
+            </div>
+
+            <div class="manifesto-box">
+              <span class="manifesto-label">MANIFIESTO MACINTOSH 128K</span>
+              <p class="manifesto-body">
+                "La simplicidad no es solo la ausencia de desorden. Es un estado de armonía donde el diseño y la utilidad son inseparables."
+              </p>
+            </div>
+          </div>
+
+          <div class="slide-visual-col">
+            <div class="image-frame-swiss">
+              <div class="frame-tag top-left-tag">FIG. 02 — MACINTOSH 128K (1984)</div>
+              <div class="frame-tag bottom-right-tag">DESIGN: JERRY MANOCK // HARTMUT ESSLINGER</div>
+              <img src="./assets/images/section2_mac1984.jpg" alt="Apple Macintosh 128K original en pedestal de concreto minimalista" class="slide-img" />
+              <div class="image-lens-overlay"></div>
+            </div>
+
+            <div class="tech-spec-bar">
+              <div class="spec-col">
+                <span class="spec-label">LANZAMIENTO</span>
+                <span class="spec-val">24.01.1984</span>
+              </div>
+              <div class="spec-col">
+                <span class="spec-label">MEMORIA RAM</span>
+                <span class="spec-val">128 KB</span>
+              </div>
+              <div class="spec-col">
+                <span class="spec-label">PANTALLA</span>
+                <span class="spec-val">9" Monocromo (512x342)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SLIDE 3: LA ERA DEL MAC OS CLÁSICO (1984 - 2001)
+         ======================================================== -->
+    <section class="slide-section" id="slide-2" data-theme="classic-macos">
+      <div class="slide-container">
+        
+        <div class="slide-meta-row">
+          <div class="meta-item index-item">
+            <span class="swiss-num">03</span>
+            <span class="slash">/</span>
+            <span class="total-num">06</span>
+          </div>
+          <div class="meta-item category-item">ARQUITECTURA DE 17 AÑOS // 1984 — 2001</div>
+          <div class="meta-item tag-item">
+            <span class="swiss-flag-dot"></span> SYSTEM 1 HASTA MAC OS 9
+          </div>
+        </div>
+
+        <div class="slide-main-layout">
+          <div class="slide-text-col">
+            <h2 class="slide-title">
+              La Era del<br>
+              <span class="highlight-title">Mac OS Clásico</span>
+            </h2>
+
+            <div class="editorial-lead">
+              Durante sus primeros 17 años, los sistemas operativos del Mac compartieron la misma arquitectura fundamental, evolucionando progresivamente desde simples disquetes hasta la era de la web.
+            </div>
+
+            <div class="timeline-evolution-list">
+              
+              <!-- Item 1: System 1 al 7 -->
+              <div class="timeline-entry">
+                <div class="entry-header">
+                  <span class="entry-tag">1984 – 1997</span>
+                  <h3 class="entry-title">System Software (System 1 al 7)</h3>
+                </div>
+                <p class="entry-desc">
+                  Al principio no se llamaban "Mac OS", sino simplemente <strong>System</strong>. Introdujeron el <strong>Finder</strong>, la barra de menú superior persistente, ventanas arrastrables y el paradigma del <strong>Escritorio</strong> que sigue vigente hoy.
+                </p>
+              </div>
+
+              <!-- Item 2: Mac OS 8 y 9 -->
+              <div class="timeline-entry">
+                <div class="entry-header">
+                  <span class="entry-tag red">1997 – 2001</span>
+                  <h3 class="entry-title">Mac OS 8 y Mac OS 9</h3>
+                </div>
+                <p class="entry-desc">
+                  Apple adoptó formalmente el nombre "Mac OS". Incluyeron mejoras estéticas como Platinum UI y soporte web nativo. Sin embargo, su arquitectura base carecía de <strong>multitarea real preventiva</strong> y <strong>memoria protegida</strong>: si una aplicación fallaba, toda la máquina quedaba congelada.
+                </p>
+              </div>
+
+            </div>
+
+            <div class="swiss-alert-banner">
+              <div class="alert-icon"><i data-lucide="alert-triangle"></i></div>
+              <div class="alert-content">
+                <strong>Límite Arquitectónico:</strong> La arquitectura cooperativa del Mac Clásico llegó a su techo tecnológico a finales de los años 90. Se requería una refundación total.
+              </div>
+            </div>
+          </div>
+
+          <div class="slide-visual-col">
+            <div class="image-frame-swiss">
+              <div class="frame-tag top-left-tag">FIG. 03 — FINDER & SYSTEM 1</div>
+              <div class="frame-tag bottom-right-tag">ORIGINAL BITMAP DESIGN // SUSAN KARE</div>
+              <img src="./assets/images/section3_macos_classic.jpg" alt="Interfaz gráfica clásica de Mac OS System 1 con iconos y ventanas" class="slide-img" />
+              <div class="image-lens-overlay"></div>
+            </div>
+
+            <div class="tech-spec-bar">
+              <div class="spec-col">
+                <span class="spec-label">ICONOGRAFÍA</span>
+                <span class="spec-val">Susan Kare (1984)</span>
+              </div>
+              <div class="spec-col">
+                <span class="spec-label">PARADIGMA</span>
+                <span class="spec-val">Finder + Menú Superior</span>
+              </div>
+              <div class="spec-col">
+                <span class="spec-label">ÚLTIMA VERSIÓN</span>
+                <span class="spec-val">Mac OS 9.2.2 (2001)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SLIDE 4: LOS OTROS SISTEMAS HISTÓRICOS DE APPLE
+         ======================================================== -->
+    <section class="slide-section" id="slide-3" data-theme="experimental-os">
+      <div class="slide-container">
+        
+        <div class="slide-meta-row">
+          <div class="meta-item index-item">
+            <span class="swiss-num">04</span>
+            <span class="slash">/</span>
+            <span class="total-num">06</span>
+          </div>
+          <div class="meta-item category-item">LABORATORIO & EXPERIMENTACIÓN HISTÓRICA</div>
+          <div class="meta-item tag-item">
+            <span class="swiss-flag-dot"></span> PROYECTOS PARALELOS & FALLIDOS
+          </div>
+        </div>
+
+        <div class="slide-main-layout">
+          <div class="slide-text-col">
+            <h2 class="slide-title">
+              Los "Otros" Sistemas<br>
+              <span class="highlight-title">Históricos de Apple</span>
+            </h2>
+
+            <div class="editorial-lead">
+              Apple no solo desarrolló el Mac OS convencional; exploró múltiples caminos paralelos, sistemas de discos pioneros e intentos fallidos de reinventar su núcleo.
+            </div>
+
+            <div class="archive-catalog-grid">
+              <!-- Item 1: Apple DOS y ProDOS -->
+              <div class="catalog-card">
+                <div class="catalog-badge">01 // DISK OS</div>
+                <h3 class="catalog-title">Apple DOS y ProDOS</h3>
+                <p class="catalog-text">
+                  Los sistemas operativos de disco utilizados en las computadoras Apple II antes de la era gráfica. Controlaban unidades de disquete de 5.25" mediante comandos de consola.
+                </p>
+                <div class="catalog-meta">Apple II Series (1978-1993)</div>
+              </div>
+
+              <!-- Item 2: A/UX -->
+              <div class="catalog-card">
+                <div class="catalog-badge">02 // UNIX ROOTS</div>
+                <h3 class="catalog-title">A/UX (Apple Unix — 1988)</h3>
+                <p class="catalog-text">
+                  El primer intento de Apple de crear un sistema basado en UNIX para computadoras Macintosh. Diseñado para universidades y servidores gubernamentales sobre hardware de alto costo.
+                </p>
+                <div class="catalog-meta">Basado en AT&T System V Release 2.2</div>
+              </div>
+
+              <!-- Item 3: Copland -->
+              <div class="catalog-card alert-catalog">
+                <div class="catalog-badge red">03 // EL PROYECTO CANCELADO</div>
+                <h3 class="catalog-title">Copland (1996)</h3>
+                <p class="catalog-text">
+                  El intento desesperado por reconstruir Mac OS con microkernel desde cero. Sufrió retrasos masivos, incompatibilidades graves y fue cancelado, detonando la crisis más severa de Apple.
+                </p>
+                <div class="catalog-meta">Cancelado por Gil Amelio en 1996</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="slide-visual-col">
+            <div class="image-frame-swiss">
+              <div class="frame-tag top-left-tag">FIG. 04 — ARCHIV DER BETRIEBSSYSTEME</div>
+              <div class="frame-tag bottom-right-tag">BLUEPRINTS // A/UX & COPLAND</div>
+              <img src="./assets/images/section4_other_os.jpg" alt="Poster técnico suizo con diagramas de A/UX, Apple DOS y Copland" class="slide-img" />
+              <div class="image-lens-overlay"></div>
+            </div>
+
+            <div class="tech-spec-bar">
+              <div class="spec-col">
+                <span class="spec-label">A/UX LANZAMIENTO</span>
+                <span class="spec-val">Febrero 1988</span>
+              </div>
+              <div class="spec-col">
+                <span class="spec-label">ESTADO COPLAND</span>
+                <span class="spec-val">Cancelado (1996)</span>
+              </div>
+              <div class="spec-col">
+                <span class="spec-label">CONSECUENCIA</span>
+                <span class="spec-val">Búsqueda Externa de OS</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SLIDE 5: LA COMPRA DE NEXT Y MAC OS X
+         ======================================================== -->
+    <section class="slide-section" id="slide-4" data-theme="next-osx">
+      <div class="slide-container">
+        
+        <div class="slide-meta-row">
+          <div class="meta-item index-item">
+            <span class="swiss-num">05</span>
+            <span class="slash">/</span>
+            <span class="total-num">06</span>
+          </div>
+          <div class="meta-item category-item">EL RENACIMIENTO // 1996 — 2001</div>
+          <div class="meta-item tag-item">
+            <span class="swiss-flag-dot"></span> NEXTSTEP → MAC OS X AQUA
+          </div>
+        </div>
+
+        <div class="slide-main-layout">
+          <div class="slide-text-col">
+            <h2 class="slide-title">
+              La Compra de NeXT y el<br>
+              <span class="highlight-title">Nacimiento de Mac OS X</span>
+            </h2>
+
+            <div class="editorial-lead">
+              El colapso del proyecto Copland forzó a Apple a buscar un sistema operativo fuera de la empresa, desencadenando el regreso de Steve Jobs y la mayor reinvención de software en la historia.
+            </div>
+
+            <div class="next-step-blocks">
+              <div class="block-step">
+                <div class="step-badge">PASO 01</div>
+                <div class="step-content">
+                  <h4>NeXTSTEP: Los Cimientos (1996)</h4>
+                  <p>Apple adquiere por $429 millones a NeXT, la empresa fundada por Jobs en 1985 tras ser despedido. Su sistema orientado a objetos basado en UNIX se convirtió en la piedra angular de Apple.</p>
+                </div>
+              </div>
+
+              <div class="block-step highlight-step">
+                <div class="step-badge red">PASO 02</div>
+                <div class="step-content">
+                  <h4>Mac OS X (2001): Borrón y Cuenta Nueva</h4>
+                  <p>Lanzado en marzo de 2001 con la interfaz Aqua. Mantuvo la intuitividad gráfica legendaria de Apple en la superficie, pero impulsada por un robusto núcleo <strong>UNIX (Darwin / Mach kernel)</strong> con memoria protegida y multitarea real.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="quote-architectural">
+              «NeXTSTEP trajo la arquitectura; Apple trajo el alma y la escala. Juntos crearon el sistema más avanzado del planeta.»
+            </div>
+          </div>
+
+          <div class="slide-visual-col">
+            <div class="image-frame-swiss">
+              <div class="frame-tag top-left-tag">FIG. 05 — NEXT CUBE & AQUA GUI</div>
+              <div class="frame-tag bottom-right-tag">UNIX FOUNDATIONS // 2001</div>
+              <img src="./assets/images/section5_next_osx.jpg" alt="Cubo NeXT negro y pantalla Apple Cinema Display con Mac OS X Aqua" class="slide-img" />
+              <div class="image-lens-overlay"></div>
+            </div>
+
+            <div class="tech-spec-bar">
+              <div class="spec-col">
+                <span class="spec-label">ADQUISICIÓN NEXT</span>
+                <span class="spec-val">Dic. 1996 ($429M)</span>
+              </div>
+              <div class="spec-col">
+                <span class="spec-label">NÚCLEO OS X</span>
+                <span class="spec-val">UNIX / Mach / BSD</span>
+              </div>
+              <div class="spec-col">
+                <span class="spec-label">INTERFAZ</span>
+                <span class="spec-val">Aqua UI (2001)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SLIDE 6: EL LEGADO Y OTROS SISTEMAS OPERATIVOS
+         ======================================================== -->
+    <section class="slide-section" id="slide-5" data-theme="apple-legacy">
+      <div class="slide-container">
+        
+        <div class="slide-meta-row">
+          <div class="meta-item index-item">
+            <span class="swiss-num">06</span>
+            <span class="slash">/</span>
+            <span class="total-num">06</span>
+          </div>
+          <div class="meta-item category-item">EL LEGADO // 2007 — PRESENTE</div>
+          <div class="meta-item tag-item">
+            <span class="swiss-flag-dot"></span> EL ÁRBOL GENEALÓGICO DE APPLE
+          </div>
+        </div>
+
+        <div class="slide-main-layout">
+          <div class="slide-text-col">
+            <h2 class="slide-title">
+              El Legado:<br>
+              <span class="highlight-title">Cómo el Mac dio vida</span> a todo el ecosistema
+            </h2>
+
+            <div class="editorial-lead">
+              El inmenso esfuerzo de ingeniería depositado en Mac OS X sirvió como la semilla de software para todos los dispositivos modernos de Apple. Al modularizar y optimizar este potente núcleo, nacieron:
+            </div>
+
+            <div class="os-family-tree">
+              <!-- iOS -->
+              <div class="family-card">
+                <div class="card-head">
+                  <span class="os-code">iOS</span>
+                  <span class="os-year">2007</span>
+                </div>
+                <p>Revolucionó los teléfonos móviles con el iPhone. Un derivado directo de OS X adaptado al tacto multi-touch.</p>
+              </div>
+
+              <!-- iPadOS -->
+              <div class="family-card">
+                <div class="card-head">
+                  <span class="os-code">iPadOS</span>
+                  <span class="os-year">2019</span>
+                </div>
+                <p>Optimizado para productividad modular, lápiz óptico y pantallas táctiles de gran formato.</p>
+              </div>
+
+              <!-- watchOS & tvOS -->
+              <div class="family-card">
+                <div class="card-head">
+                  <span class="os-code">watchOS & tvOS</span>
+                  <span class="os-year">2015</span>
+                </div>
+                <p>Microsistemas de tiempo real adaptados para sensores biométricos en la muñeca y entretenimiento en el hogar.</p>
+              </div>
+
+              <!-- visionOS -->
+              <div class="family-card vision-card">
+                <div class="card-head">
+                  <span class="os-code spatial">visionOS</span>
+                  <span class="os-year red">2024</span>
+                </div>
+                <p>La frontera más reciente: computación espacial en 3D para Apple Vision Pro con renderizado foveado y rastreo ocular.</p>
+              </div>
+            </div>
+
+            <div class="summary-final-box">
+              <strong>Conclusión Histórica:</strong> La visión de 1984 de una computadora personal intuitiva no murió con el hardware beige: vive en cada pantalla y experiencia espacial que utilizamos en el siglo XXI.
+            </div>
+          </div>
+
+          <div class="slide-visual-col">
+            <div class="image-frame-swiss">
+              <div class="frame-tag top-left-tag">FIG. 06 — THE LIVING ECOSYSTEM</div>
+              <div class="frame-tag bottom-right-tag">SPATIAL COMPUTING & BEYOND</div>
+              <img src="./assets/images/section6_legacy.jpg" alt="Ecosistema Apple con iPhone, iPad, Apple Watch y Apple Vision Pro" class="slide-img" />
+              <div class="image-lens-overlay"></div>
+            </div>
+
+            <div class="tech-spec-bar">
+              <div class="spec-col">
+                <span class="spec-label">SEMILLA COMÚN</span>
+                <span class="spec-val">Mac OS X Darwin Kernel</span>
+              </div>
+              <div class="spec-col">
+                <span class="spec-label">DISPOSITIVOS ACTIVOS</span>
+                <span class="spec-val">+2.2 Mil Millones</span>
+              </div>
+              <div class="spec-col">
+                <span class="spec-label">ÚLTIMA FRONTERA</span>
+                <span class="spec-val">Computación Espacial</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- CONTROLES FLOTANTES DE NAVEGACIÓN (SWISS FLOATING DOCK) -->
+  <footer id="presentation-dock" class="presentation-dock hidden-init">
+    <div class="dock-left">
+      <span class="dock-title-caps">CAPÍTULO ACTUAL:</span>
+      <span class="dock-topic-label" id="dock-topic-label">01 // LOS INICIOS Y EL PROYECTO LISA</span>
+    </div>
+
+    <div class="dock-center">
+      <button class="dock-nav-btn" id="btn-prev" aria-label="Diapositiva anterior" title="Anterior (Flecha Izquierda / Arriba)">
+        <i data-lucide="arrow-left"></i>
+        <span>ANTERIOR</span>
+      </button>
+      
+      <div class="dock-counter-display">
+        <span id="counter-current">01</span>
+        <span class="counter-sep">/</span>
+        <span id="counter-total">06</span>
+      </div>
+
+      <button class="dock-nav-btn" id="btn-next" aria-label="Siguiente diapositiva" title="Siguiente (Flecha Derecha / Espacio)">
+        <span>SIGUIENTE</span>
+        <i data-lucide="arrow-right"></i>
+      </button>
+    </div>
+
+    <div class="dock-right">
+      <div class="keyboard-shortcuts-pill" id="btn-help-shortcuts" title="Ver atajos de teclado">
+        <i data-lucide="command"></i>
+        <span>ATAJOS [?]</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL DE ATAJOS DE TECLADO -->
+  <div id="shortcuts-modal" class="swiss-modal" aria-hidden="true">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal-window">
+      <div class="modal-header">
+        <span class="modal-code">KEYBOARD_NAVIGATION // SWISS DOKUMENT</span>
+        <button class="modal-close-btn" id="btn-close-modal" aria-label="Cerrar modal">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h3 class="modal-title">Control de la Presentación</h3>
+        <div class="shortcuts-grid">
+          <div class="shortcut-row">
+            <span class="key-combo"><kbd>→</kbd> / <kbd>↓</kbd> / <kbd>Espacio</kbd></span>
+            <span class="key-desc">Siguiente apartado / Transición</span>
+          </div>
+          <div class="shortcut-row">
+            <span class="key-combo"><kbd>←</kbd> / <kbd>↑</kbd></span>
+            <span class="key-desc">Apartado anterior</span>
+          </div>
+          <div class="shortcut-row">
+            <span class="key-combo"><kbd>1</kbd> – <kbd>6</kbd></span>
+            <span class="key-desc">Saltar directamente a cualquier tema</span>
+          </div>
+          <div class="shortcut-row">
+            <span class="key-combo"><kbd>F</kbd></span>
+            <span class="key-desc">Pantalla completa (Fullscreen)</span>
+          </div>
+          <div class="shortcut-row">
+            <span class="key-combo"><kbd>G</kbd></span>
+            <span class="key-desc">Mostrar / ocultar retícula suiza</span>
+          </div>
+          <div class="shortcut-row">
+            <span class="key-combo"><kbd>Esc</kbd></span>
+            <span class="key-desc">Volver a la portada monumental</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
